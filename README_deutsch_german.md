@@ -16,7 +16,7 @@ https://raw.githubusercontent.com/<konto>/<repository>/main/releases.json
 
 Oder die `.zbl`-Datei von der Release-Webpage herunterladen und in der App mit «Aus Datei importieren» öffnen.
 
-**Lied hinzufügen und prüfen:**
+**Lied hinzufügen und prüfen:** unter Windows `Menu for zangbundel-tools.bat` starten und Punkt 1 wählen, oder direkt:
 
 ```
 python scripts/validate.py --strict --info .

@@ -16,7 +16,7 @@ https://raw.githubusercontent.com/<account>/<repository>/main/releases.json
 
 Or download the `.zbl` file from the release webpage and open it in the app with "import from file".
 
-**Add a song and check it:**
+**Add a song and check it:** on Windows start `Menu for zangbundel-tools.bat` and choose item 1, or directly:
 
 ```
 python scripts/validate.py --strict --info .

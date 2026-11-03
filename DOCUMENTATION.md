@@ -12,6 +12,7 @@ releases.json              release index; created automatically by the first rel
 scripts/validate.py        checks the library against the rules of the format
 scripts/release.py         builds, verifies and indexes the release archives (.zbl)
 scripts/LICENSE            licence of the tools (Apache 2.0 with the Commons Clause)
+Menu for zangbundel-tools.bat  menu for the tools on Windows
 .github/workflows/         check on every push; release on every tag
 .gitignore                 allow-list: only explicitly listed files go into the repository
 .gitattributes             pins the line endings (LF) so hashes are identical everywhere
@@ -96,6 +97,23 @@ python scripts/validate.py --strict --info .
 ```
 
 Every finding appears as `path:line LEVEL CODE message`, followed by the hash of each song and a summary. `--strict` also fails on warnings, `--info` shows additional notes. Before every commit the check must pass without errors and without warnings. On GitHub the same check runs automatically on every push.
+
+### Menu on Windows
+
+`Menu for zangbundel-tools.bat` calls the tools with the right parameters. A double click is enough; the menu always works in the library folder.
+
+| Item | Call | Purpose |
+|---|---|---|
+| 1 | `validate.py --strict --info .` | full check with notes |
+| 2 | `validate.py --strict .` | errors and warnings only |
+| 3 | `release.py build --tag <tag> --out dist` | build the archive from an existing git tag |
+| 4 | `release.py build --tag v0.0.0-test --allow-untagged --out dist` | test archive from the last commit, without a tag |
+| 5 | `release.py verify --strict <newest archive in dist>` | check the archive as the app does |
+| 6 | `--help` of both tools | show all options |
+
+The menu uses the Python launcher `py`, otherwise `python` from the PATH. After every item it shows "Result: OK" or "Result: FAILED".
+
+**Important:** items 3 and 4 build from the last commit. Uncommitted changes are not in the archive. When options of the tools change, the menu must be updated.
 
 ## 6. Publishing on GitHub
 

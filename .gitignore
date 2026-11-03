@@ -15,7 +15,6 @@
 !LICENSE
 !releases.json
 
-# Documentation and project rules
 # Documentation
 !README.md
 !README_deutsch_german.md
@@ -29,3 +28,4 @@
 # Tools
 !scripts/*.py
 !scripts/LICENSE
+!Menu for zangbundel-tools.bat

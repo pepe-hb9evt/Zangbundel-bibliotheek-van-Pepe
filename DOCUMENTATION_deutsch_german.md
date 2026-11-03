@@ -12,6 +12,7 @@ releases.json              Release-Index; wird beim ersten Release automatisch e
 scripts/validate.py        prüft die Bibliothek nach den Regeln des Formats
 scripts/release.py         baut, prüft und indexiert die Release-Archive (.zbl)
 scripts/LICENSE            Lizenz der Werkzeuge (Apache 2.0 mit Commons Clause)
+Menu for zangbundel-tools.bat  Menü für die Werkzeuge unter Windows
 .github/workflows/         Prüfung bei jedem Push; Release bei jedem Tag
 .gitignore                 Allow-List: nur ausdrücklich genannte Dateien kommen ins Repository
 .gitattributes             legt die Zeilenenden fest (LF), damit Prüfsummen überall gleich sind
@@ -96,6 +97,23 @@ python scripts/validate.py --strict --info .
 ```
 
 Jeder Befund erscheint als `Pfad:Zeile STUFE CODE Meldung`, danach pro Lied die Prüfsumme und eine Zusammenfassung. `--strict` lässt auch Warnungen scheitern, `--info` zeigt zusätzliche Hinweise. Vor jedem Commit muss die Prüfung ohne Fehler und ohne Warnungen durchlaufen. Auf GitHub läuft dieselbe Prüfung automatisch bei jedem Push.
+
+### Menü unter Windows
+
+`Menu for zangbundel-tools.bat` ruft die Werkzeuge mit den passenden Parametern auf. Doppelklick genügt; das Menü arbeitet immer im Ordner der Bibliothek.
+
+| Punkt | Aufruf | Zweck |
+|---|---|---|
+| 1 | `validate.py --strict --info .` | vollständige Prüfung mit Hinweisen |
+| 2 | `validate.py --strict .` | nur Fehler und Warnungen |
+| 3 | `release.py build --tag <Tag> --out dist` | Archiv aus einem vorhandenen Git-Tag bauen |
+| 4 | `release.py build --tag v0.0.0-test --allow-untagged --out dist` | Test-Archiv aus dem letzten Commit, ohne Tag |
+| 5 | `release.py verify --strict <neuestes Archiv in dist>` | Archiv prüfen wie die App |
+| 6 | `--help` beider Werkzeuge | alle Optionen anzeigen |
+
+Das Menü verwendet den Python-Launcher `py`, sonst `python` aus dem PATH. Nach jedem Punkt zeigt es «Result: OK» oder «Result: FAILED».
+
+**Wichtig:** Punkt 3 und 4 bauen aus dem letzten Commit. Nicht committete Änderungen sind nicht im Archiv. Werden Optionen der Werkzeuge geändert, muss das Menü angepasst werden.
 
 ## 6. Veröffentlichung auf GitHub
 
