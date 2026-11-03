@@ -1,0 +1,25 @@
+{
+  "format": "zangbundel-library",
+  "format_version": "1.1",
+  "id": "pepe-deutsche-lieder",
+  "name": "Deutsche Lieder",
+  "description": "Gemeinfreie deutsche Kinder-, Weihnachts- und Kirchenlieder für die Zangbundel-App. Alle Lieder sind Public Domain; Herkunft und Autoren stehen bei jedem Lied.",
+  "maintainer": {
+    "name": "Pepe",
+    "email": "zangbundel-test@pepemail.ch"
+  },
+  "license": {
+    "id": "CC0-1.0",
+    "file": "LICENSE",
+    "summary": "Creative Commons Zero 1.0: frei verwendbar ohne Einschränkung; die Lieder selbst sind gemeinfrei."
+  },
+  "min_app_version": "0.1.0",
+  "languages": ["de"],
+  "tags": {
+    "kinderlied": { "de": "Kinderlied",   "nl": "Kinderlied",  "en": "Children's song" },
+    "volkslied":  { "de": "Volkslied",    "nl": "Volkslied",   "en": "Folk song" },
+    "laterne":    { "de": "Laternenlied", "nl": "Sint-Maarten", "en": "Lantern song" },
+    "weihnachten":{ "de": "Weihnachten",  "nl": "Kerst",       "en": "Christmas" },
+    "kirchenlied":{ "de": "Kirchenlied",  "nl": "Kerklied",    "en": "Hymn" }
+  }
+}

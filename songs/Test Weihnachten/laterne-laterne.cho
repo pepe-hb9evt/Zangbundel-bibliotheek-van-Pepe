@@ -1,0 +1,38 @@
+# Laterne, Laterne - traditionelles deutsches Laternenlied (Sankt Martin)
+# Text und Melodie volkstümlich, verbreitet seit dem späten 19. Jahrhundert.
+# Es kursieren regional leicht abweichende Strophen; hier die gängige Fassung.
+{title: Laterne, Laterne}
+{meta: id laterne-laterne}
+{meta: language de}
+{lyricist: traditionell}
+{composer: traditionell}
+{copyright: Public domain}
+{meta: license public-domain}
+{meta: source Traditionelles deutsches Laternenlied, Text nach der allgemein gesungenen Fassung}
+{meta: tag kinderlied}
+{meta: tag volkslied}
+{meta: tag laterne}
+
+{start_of_verse}
+Laterne, Laterne,
+Sonne, Mond und Sterne.
+Brenne auf, mein Licht,
+brenne auf, mein Licht,
+aber nur meine liebe Laterne nicht.
+{end_of_verse}
+
+{start_of_verse}
+Laterne, Laterne,
+Sonne, Mond und Sterne.
+Sperrt ihn ein, den Wind,
+sperrt ihn ein, den Wind,
+er soll warten, bis wir zu Hause sind.
+{end_of_verse}
+
+{start_of_verse}
+Laterne, Laterne,
+Sonne, Mond und Sterne.
+Bleibe hell, mein Licht,
+bleibe hell, mein Licht,
+denn sonst strahlt meine liebe Laterne nicht.
+{end_of_verse}

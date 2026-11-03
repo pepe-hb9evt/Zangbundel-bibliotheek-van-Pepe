@@ -1,0 +1,31 @@
+# Allow-list: everything is ignored unless it is listed below.
+# Add every new file type that belongs in the repository explicitly.
+# Never add files with personal data or secrets.
+*
+!*/
+
+# Repository configuration
+!.gitignore
+!.gitattributes
+!.editorconfig
+!.github/workflows/*.yml
+
+# Library metadata, licence and release index
+!zangbundel.json
+!LICENSE
+!releases.json
+
+# Documentation and project rules
+!README.md
+!README_deutsch_german.md
+!DOCUMENTATION.md
+!DOCUMENTATION_deutsch_german.md
+!CLAUDE.md
+
+# Songs and setlists
+!songs/**/*.cho
+!setlists/*.zbs
+
+# Tools
+!scripts/*.py
+!scripts/LICENSE

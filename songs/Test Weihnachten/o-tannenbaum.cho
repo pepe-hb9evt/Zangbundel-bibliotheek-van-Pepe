@@ -1,0 +1,42 @@
+# O Tannenbaum - deutsches Weihnachtslied
+# Text: Ernst Anschütz (1780-1861), 1824, nach einem älteren Volkslied
+# (erste Strophe nach August Zarnack, 1819). Melodie volkstümlich.
+{title: O Tannenbaum}
+{meta: id o-tannenbaum}
+{meta: language de}
+{lyricist: Ernst Anschütz}
+{lyricist: August Zarnack}
+{composer: traditionell}
+{year: 1824}
+{copyright: Public domain}
+{meta: license public-domain}
+{meta: source Text von Ernst Anschütz (1824) nach dem Volkslied; Fassung in drei Strophen, wie allgemein gesungen}
+{meta: tag kinderlied}
+{meta: tag weihnachten}
+
+{start_of_verse}
+O Tannenbaum, o Tannenbaum,
+wie treu sind deine Blätter!
+Du grünst nicht nur zur Sommerzeit,
+nein, auch im Winter, wenn es schneit.
+O Tannenbaum, o Tannenbaum,
+wie treu sind deine Blätter!
+{end_of_verse}
+
+{start_of_verse}
+O Tannenbaum, o Tannenbaum,
+du kannst mir sehr gefallen!
+Wie oft hat nicht zur Weihnachtszeit
+ein Baum von dir mich hoch erfreut!
+O Tannenbaum, o Tannenbaum,
+du kannst mir sehr gefallen!
+{end_of_verse}
+
+{start_of_verse}
+O Tannenbaum, o Tannenbaum,
+dein Kleid will mich was lehren:
+Die Hoffnung und Beständigkeit
+gibt Trost und Kraft zu jeder Zeit.
+O Tannenbaum, o Tannenbaum,
+dein Kleid will mich was lehren!
+{end_of_verse}

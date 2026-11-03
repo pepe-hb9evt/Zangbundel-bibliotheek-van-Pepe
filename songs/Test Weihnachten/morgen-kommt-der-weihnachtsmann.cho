@@ -1,0 +1,44 @@
+# Morgen kommt der Weihnachtsmann - deutsches Kinderlied
+# Text: August Heinrich Hoffmann von Fallersleben (1798-1874), 1835.
+# Melodie: französisches Volkslied "Ah ! vous dirai-je, maman" (18. Jh.).
+# Originaltext. Neuere Fassungen ersetzen das Kriegsspielzeug in Strophe 1 und 2;
+# solche Umdichtungen können noch geschützt sein und sind hier nicht übernommen.
+{title: Morgen kommt der Weihnachtsmann}
+{meta: id morgen-kommt-der-weihnachtsmann}
+{meta: language de}
+{lyricist: August Heinrich Hoffmann von Fallersleben}
+{composer: traditionell}
+{year: 1835}
+{copyright: Public domain}
+{meta: license public-domain}
+{meta: source Originaltext von Hoffmann von Fallersleben (1835)}
+{meta: tag kinderlied}
+{meta: tag weihnachten}
+{meta: melody Ah ! vous dirai-je, maman}
+
+{start_of_verse}
+Morgen kommt der Weihnachtsmann,
+kommt mit seinen Gaben.
+Trommel, Pfeife und Gewehr,
+Fahn und Säbel und noch mehr,
+ja ein ganzes Kriegesheer
+möcht ich gerne haben.
+{end_of_verse}
+
+{start_of_verse}
+Bring uns, lieber Weihnachtsmann,
+bring auch morgen, bringe
+Musketier und Grenadier,
+Zottelbär und Pantertier,
+Ross und Esel, Schaf und Stier,
+lauter schöne Dinge.
+{end_of_verse}
+
+{start_of_verse}
+Doch du weißt ja unsern Wunsch,
+kennst ja unsre Herzen.
+Kinder, Vater und Mama,
+auch sogar der Großpapa,
+alle, alle sind wir da,
+warten dein mit Schmerzen.
+{end_of_verse}

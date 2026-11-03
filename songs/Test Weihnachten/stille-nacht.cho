@@ -1,0 +1,42 @@
+# Stille Nacht - österreichisches Weihnachtslied
+# Text: Joseph Mohr (1792-1848), 1816. Melodie: Franz Xaver Gruber (1787-1863).
+# Uraufführung am 24. Dezember 1818 in Oberndorf bei Salzburg.
+# Das Original hat sechs Strophen; hier die heute üblichen drei (1, 2 und 6).
+{title: Stille Nacht}
+{subtitle: Stille Nacht, heilige Nacht}
+{meta: id stille-nacht}
+{meta: language de}
+{lyricist: Joseph Mohr}
+{composer: Franz Xaver Gruber}
+{year: 1818}
+{copyright: Public domain}
+{meta: license public-domain}
+{meta: source Text von Joseph Mohr (1816), Melodie von Franz Xaver Gruber (1818); die drei allgemein gesungenen Strophen}
+{meta: tag weihnachten}
+
+{start_of_verse}
+Stille Nacht, heilige Nacht!
+Alles schläft, einsam wacht
+nur das traute hochheilige Paar.
+Holder Knabe im lockigen Haar,
+schlaf in himmlischer Ruh,
+schlaf in himmlischer Ruh.
+{end_of_verse}
+
+{start_of_verse}
+Stille Nacht, heilige Nacht!
+Hirten erst kundgemacht,
+durch der Engel Halleluja
+tönt es laut von fern und nah:
+Christ, der Retter, ist da!
+Christ, der Retter, ist da!
+{end_of_verse}
+
+{start_of_verse}
+Stille Nacht, heilige Nacht!
+Gottes Sohn, o wie lacht
+Lieb aus deinem göttlichen Mund,
+da uns schlägt die rettende Stund,
+Christ, in deiner Geburt!
+Christ, in deiner Geburt!
+{end_of_verse}
