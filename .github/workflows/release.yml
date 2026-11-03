@@ -1,8 +1,9 @@
 name: Release
 
-# Triggered by a pushed tag v<version> (e.g. v2026.11.0):
-# builds the .zbl release archive from the tag, verifies it, publishes it as a
-# GitHub release (also as <library id>-latest.zbl) and updates releases.json on main.
+# Builds the .zbl release archive for a pushed tag v<version>, verifies it,
+# publishes it as a GitHub release (also under the fixed name
+# <library id>-latest.zbl) and updates releases.json on main.
+# See song-format specification section 12.6.
 
 on:
   push:
