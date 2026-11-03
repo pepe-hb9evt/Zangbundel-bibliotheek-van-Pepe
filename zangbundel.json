@@ -14,8 +14,8 @@
     "summary": "Creative Commons Zero 1.0: frei verwendbar ohne Einschränkung; die Lieder selbst sind gemeinfrei."
   },
   "min_app_version": "0.1.0",
-  "homepage": "https://github.com/pepe-hb9evt/Zangbundel-bibliotheek",
-  "release_index": "https://raw.githubusercontent.com/pepe-hb9evt/Zangbundel-bibliotheek/main/releases.json",
+  "homepage": "https://github.com/pepe-hb9evt/Zangbundel-bibliotheek-van-Pepe",
+  "release_index": "https://raw.githubusercontent.com/pepe-hb9evt/Zangbundel-bibliotheek-van-Pepe/main/releases.json",
   "languages": ["de"],
   "tags": {
     "kinderlied": { "de": "Kinderlied",   "nl": "Kinderlied",  "en": "Children's song" },
