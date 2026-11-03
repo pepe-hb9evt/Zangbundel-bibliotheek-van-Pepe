@@ -113,6 +113,18 @@ Every finding appears as `path:line LEVEL CODE message`, followed by the hash of
 
 The menu uses the Python launcher `py`, otherwise `python` from the PATH. After every item it shows "Result: OK" or "Result: FAILED".
 
+**Git is needed:** items 3 and 4 call `git`. The menu takes git from the PATH, otherwise it looks for Git for Windows and the git bundled with GitHub Desktop. If it finds none, it says so. For item 3 the menu first checks that the tag exists; tags are case-sensitive (`v2026.11.0` is not `V2026.11.0`).
+
+**Creating a tag through the menu:** if the tag is missing for item 3, the menu asks whether to create it. With "J" it proceeds as follows:
+
+1. Checks the tag format `v<year>.<month>.<sequence>` with a lower-case `v`.
+2. Checks that git knows your name and e-mail address (`git config --global user.name` and `user.email`).
+3. Validates the library with `validate.py --strict`; it stops on errors or warnings.
+4. Shows open changes, asks whether to commit them and asks for the commit message (Enter = "Release <tag>"). What is committed is decided by the allow-list in `.gitignore`.
+5. Sets the tag on the last commit and builds the archive.
+
+Nothing is pushed. Afterwards the menu shows the two commands `git push origin main` and `git push origin <tag>`; only pushing the tag starts the release on GitHub.
+
 **Important:** items 3 and 4 build from the last commit. Uncommitted changes are not in the archive. When options of the tools change, the menu must be updated.
 
 ## 6. Publishing on GitHub

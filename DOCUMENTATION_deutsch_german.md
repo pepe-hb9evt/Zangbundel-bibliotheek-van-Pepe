@@ -113,6 +113,18 @@ Jeder Befund erscheint als `Pfad:Zeile STUFE CODE Meldung`, danach pro Lied die 
 
 Das Menü verwendet den Python-Launcher `py`, sonst `python` aus dem PATH. Nach jedem Punkt zeigt es «Result: OK» oder «Result: FAILED».
 
+**Git wird gebraucht:** Punkt 3 und 4 rufen `git` auf. Das Menü nimmt Git aus dem PATH, sonst sucht es Git for Windows und das in GitHub Desktop enthaltene Git. Findet es keines, meldet es das. Bei Punkt 3 prüft das Menü vorher, ob der Tag existiert; Tags unterscheiden Gross- und Kleinschreibung (`v2026.11.0` ist nicht `V2026.11.0`).
+
+**Tag anlegen über das Menü:** Fehlt der Tag bei Punkt 3, fragt das Menü, ob es ihn anlegen soll. Bei «J» läuft es so ab:
+
+1. Prüft das Tag-Format `v<Jahr>.<Monat>.<Nummer>` mit kleinem `v`.
+2. Prüft, ob Git Name und Mailadresse kennt (`git config --global user.name` bzw. `user.email`).
+3. Prüft die Bibliothek mit `validate.py --strict`; bei Fehlern oder Warnungen bricht es ab.
+4. Zeigt offene Änderungen, fragt, ob sie committet werden sollen, und fragt nach der Commit-Nachricht (Enter = «Release <Tag>»). Committet wird, was die Allow-List in `.gitignore` zulässt.
+5. Setzt den Tag auf den letzten Commit und baut das Archiv.
+
+Gepusht wird nicht. Das Menü zeigt danach die beiden Befehle `git push origin main` und `git push origin <Tag>`; erst der Push des Tags startet das Release auf GitHub.
+
 **Wichtig:** Punkt 3 und 4 bauen aus dem letzten Commit. Nicht committete Änderungen sind nicht im Archiv. Werden Optionen der Werkzeuge geändert, muss das Menü angepasst werden.
 
 ## 6. Veröffentlichung auf GitHub
