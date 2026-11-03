@@ -25,6 +25,10 @@
 !songs/**/*.cho
 !setlists/*.zbs
 
+# Songbook releases
+!dist/
+!dist/*.*
+
 # Tools
 !scripts/*.py
 !scripts/LICENSE
