@@ -16,11 +16,11 @@
 !releases.json
 
 # Documentation and project rules
+# Documentation
 !README.md
 !README_deutsch_german.md
 !DOCUMENTATION.md
 !DOCUMENTATION_deutsch_german.md
-!CLAUDE.md
 
 # Songs and setlists
 !songs/**/*.cho

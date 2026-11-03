@@ -16,7 +16,7 @@ scripts/LICENSE            Lizenz der Werkzeuge (Apache 2.0 mit Commons Clause)
 .gitignore                 Allow-List: nur ausdrücklich genannte Dateien kommen ins Repository
 .gitattributes             legt die Zeilenenden fest (LF), damit Prüfsummen überall gleich sind
 .editorconfig              Editor-Einstellungen passend zum Format (UTF-8, LF)
-CLAUDE.md                  Arbeitsregeln für Claude
+CLAUDE.md                  Arbeitsregeln für Claude (nur lokal, nicht im Repository)
 ```
 
 Die App liest nur `zangbundel.json`, alle `.cho`-Dateien unter `songs/` und die Lizenzdatei. Die Unterordner unter `songs/` haben für die App keine Bedeutung; sie dienen nur der Übersicht.

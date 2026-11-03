@@ -16,7 +16,7 @@ scripts/LICENSE            licence of the tools (Apache 2.0 with the Commons Cla
 .gitignore                 allow-list: only explicitly listed files go into the repository
 .gitattributes             pins the line endings (LF) so hashes are identical everywhere
 .editorconfig              editor settings matching the format (UTF-8, LF)
-CLAUDE.md                  working rules for Claude
+CLAUDE.md                  working rules for Claude (local only, not in the repository)
 ```
 
 The app reads only `zangbundel.json`, every `.cho` file under `songs/` and the licence file. The subfolders under `songs/` carry no meaning for the app; they only keep things organised.
