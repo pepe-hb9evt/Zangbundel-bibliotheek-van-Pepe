@@ -123,7 +123,9 @@ Das Menü verwendet den Python-Launcher `py`, sonst `python` aus dem PATH. Nach 
 4. Zeigt offene Änderungen, fragt, ob sie committet werden sollen, und fragt nach der Commit-Nachricht (Enter = «Release <Tag>»). Committet wird, was die Allow-List in `.gitignore` zulässt.
 5. Setzt den Tag auf den letzten Commit und baut das Archiv.
 
-Gepusht wird nicht. Das Menü zeigt danach die beiden Befehle `git push origin main` und `git push origin <Tag>`; erst der Push des Tags startet das Release auf GitHub.
+**Zu GitHub pushen:** Nach jedem erfolgreichen Build bei Punkt 3 – mit neuem oder vorhandenem Tag – fragt das Menü, ob es pushen soll. Bei «J» führt es `git push origin main` und danach `git push origin <Tag>` aus; der Push des Tags startet das Release auf GitHub. Ist der Tag schon auf GitHub, meldet das Menü das und pusht nicht. Bei «N» zeigt es die beiden Befehle für später.
+
+Nach dem Push zeigt das Menü einen Hinweis: unter «Actions» auf GitHub prüfen, ob die Release-Erstellung einen grünen Haken hat (ein Kreis bedeutet, dass sie noch läuft). Sobald der Haken da ist, `git pull` ausführen: der Workflow trägt das Archiv in `releases.json` ein. Für den Push muss Git bei GitHub angemeldet sein; Git for Windows fragt beim ersten Mal danach.
 
 **Wichtig:** Punkt 3 und 4 bauen aus dem letzten Commit. Nicht committete Änderungen sind nicht im Archiv. Werden Optionen der Werkzeuge geändert, muss das Menü angepasst werden.
 

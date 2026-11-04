@@ -123,7 +123,9 @@ The menu uses the Python launcher `py`, otherwise `python` from the PATH. After 
 4. Shows open changes, asks whether to commit them and asks for the commit message (Enter = "Release <tag>"). What is committed is decided by the allow-list in `.gitignore`.
 5. Sets the tag on the last commit and builds the archive.
 
-Nothing is pushed. Afterwards the menu shows the two commands `git push origin main` and `git push origin <tag>`; only pushing the tag starts the release on GitHub.
+**Pushing to GitHub:** after every successful build in item 3 – with a new or an existing tag – the menu asks whether to push. With "J" it runs `git push origin main` and then `git push origin <tag>`; pushing the tag starts the release on GitHub. If the tag is already on GitHub, the menu says so and does not push. With "N" it shows both commands for later.
+
+After the push the menu shows a note: check under "Actions" on GitHub whether the release run has a green tick (a circle means it is still running). As soon as the tick is there, run `git pull`: the workflow adds the archive to `releases.json`. Pushing needs git to be signed in to GitHub; Git for Windows asks for it the first time.
 
 **Important:** items 3 and 4 build from the last commit. Uncommitted changes are not in the archive. When options of the tools change, the menu must be updated.
 

@@ -54,7 +54,8 @@ rem Tags are case-sensitive: v2026.11.0 and V2026.11.0 are different tags.
 git rev-parse -q --verify "refs/tags/%TAG%" >nul 2>&1
 if errorlevel 1 goto tag_missing
 call :run %PY% scripts\release.py build --tag %TAG% --out dist
-goto done
+if not "%RC%"=="0" goto done
+goto push_offer
 
 :tag_missing
 echo.
@@ -105,9 +106,59 @@ git tag -a "%TAG%" -m "Release %TAG%"
 if errorlevel 1 goto tag_git_failed
 echo.
 echo Tag %TAG% created on the last commit.
-echo To publish: git push origin main  and then  git push origin %TAG%
 echo.
 call :run %PY% scripts\release.py build --tag %TAG% --out dist
+if not "%RC%"=="0" goto done
+goto push_offer
+
+:push_offer
+rem Publishing = push main first, then the tag. Pushing the tag starts the
+rem release workflow on GitHub.
+echo.
+git ls-remote --exit-code --tags origin "refs/tags/%TAG%" >nul 2>&1
+if not errorlevel 1 goto push_already
+choice /c JN /n /m "Push main and tag %TAG% to GitHub now (starts the release)? [J/N] "
+if errorlevel 2 goto push_declined
+echo.
+echo git push origin main
+git push origin main
+if errorlevel 1 goto push_failed
+echo git push origin %TAG%
+git push origin "%TAG%"
+if errorlevel 1 goto push_failed
+echo.
+echo ----------------------------------------------------------
+echo Auf GitHub im Repository unter 'Actions' pruefen, ob die
+echo Release-Erstellung einen gruenen Haken bekommen hat.
+echo Wenn als Symbol ein Kreis dargestellt wird, ist die
+echo Release-Erstellung noch am Laufen.
+echo Sobald der gruene Haken da ist, muss noch ein 'git pull'
+echo ausgefuehrt werden, da 'releases.json' auf GitHub in
+echo neuer Version vorliegt.
+echo ----------------------------------------------------------
+set "RC=0"
+goto done
+
+:push_already
+echo Tag %TAG% is already on GitHub - nothing to push.
+echo To publish a new release, use a new tag (e.g. the next sequence number).
+set "RC=0"
+goto done
+
+:push_declined
+echo.
+echo Not pushed. Publish later with:
+echo   git push origin main
+echo   git push origin %TAG%
+set "RC=0"
+goto done
+
+:push_failed
+echo.
+echo Push failed (see above). Typical causes: not signed in to GitHub,
+echo or main on GitHub is newer - then run  git pull  and try again.
+echo The tag %TAG% exists locally; push it later with  git push origin %TAG%
+set "RC=1"
 goto done
 
 :tag_declined
