@@ -11,6 +11,7 @@ songs/                     eine ChordPro-Datei (.cho) pro Lied
 releases.json              Release-Index; wird beim ersten Release automatisch erzeugt
 scripts/validate.py        prüft die Bibliothek nach den Regeln des Formats
 scripts/release.py         baut, prüft und indexiert die Release-Archive (.zbl)
+scripts/menu.py            Menü für Prüfen, Git-Schritte und Release (Python)
 scripts/LICENSE            Lizenz der Werkzeuge (Apache 2.0 mit Commons Clause)
 Menu for zangbundel-tools.bat  Menü für die Werkzeuge unter Windows
 .github/workflows/         Prüfung bei jedem Push; Release bei jedem Tag
@@ -97,6 +98,40 @@ python scripts/validate.py --strict --info .
 ```
 
 Jeder Befund erscheint als `Pfad:Zeile STUFE CODE Meldung`, danach pro Lied die Prüfsumme und eine Zusammenfassung. `--strict` lässt auch Warnungen scheitern, `--info` zeigt zusätzliche Hinweise. Vor jedem Commit muss die Prüfung ohne Fehler und ohne Warnungen durchlaufen. Auf GitHub läuft dieselbe Prüfung automatisch bei jedem Push.
+
+### Menü in Python
+
+`scripts/menu.py` führt durch den ganzen Ablauf bis zum Release. Start im Ordner der Bibliothek oder von überall:
+
+```
+python scripts/menu.py
+```
+
+Voraussetzungen: Python 3.8 oder neuer und Git im PATH.
+
+| Punkt | Zweck | Git-Befehl |
+|---|---|---|
+| 1 | Bibliothek prüfen (`validate.py --strict --info`) | – |
+| 2 | Status: geänderte Dateien, Tags, Vergleich mit GitHub | nur Abfragen |
+| 3 | Änderungen vormerken | `git add -A` |
+| 4 | Commit erstellen (fragt nach der Nachricht) | `git commit -m "…"` |
+| 5 | Tag setzen (schlägt den nächsten freien Tag vor) | `git tag -a <Tag>` |
+| 6 | Test-Archiv aus dem letzten Commit bauen | – |
+| 7 | Release-Archiv aus einem Tag bauen | – |
+| 8 | Neuestes Archiv in `dist/` prüfen wie die App | – |
+| 9 | Commits zu GitHub pushen | `git push origin main` |
+| 10 | Tag zu GitHub pushen – startet das Release | `git push origin <Tag>` |
+| 11 | Nach dem grünen Haken unter «Actions»: Änderungen holen | `git pull origin main` |
+
+Ablauf für ein Release: 1 → 3 → 4 → 5 → 7 → 8 → 9 → 10 → grüner Haken auf GitHub → 11.
+
+**Regeln des Menüs:**
+
+- Jeder Menüpunkt führt höchstens einen Git-Befehl aus, der etwas verändert. Der Befehl wird vorher angezeigt und erklärt und läuft erst nach Bestätigung mit `j`.
+- Reine Abfragen (`git status`, `git fetch`, `git rev-list`, `git ls-remote` …) laufen ohne Rückfrage, werden aber als «Abfrage» angezeigt.
+- Vor Punkt 4, 9 und 10 holt das Menü mit `git fetch` den Stand von GitHub und zählt mit `git rev-list --count HEAD..origin/main`, ob dort Commits liegen, die lokal fehlen. Ist das so, beendet es sich mit der Aufforderung, zuerst Punkt 11 (`git pull`) auszuführen.
+- Vor Commit und Tag wird die Bibliothek geprüft; bei Fehlern oder Warnungen geht es nicht weiter.
+- Punkt 10 pusht nur, wenn der Commit des Tags schon auf GitHub ist (sonst zuerst Punkt 9) und der Tag noch nicht dort liegt. Danach zeigt das Menü den Link zu «Actions» und den Hinweis auf den grünen Haken und Punkt 11.
 
 ### Menü unter Windows
 

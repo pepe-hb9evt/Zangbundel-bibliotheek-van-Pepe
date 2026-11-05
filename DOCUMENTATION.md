@@ -11,6 +11,7 @@ songs/                     one ChordPro file (.cho) per song
 releases.json              release index; created automatically by the first release
 scripts/validate.py        checks the library against the rules of the format
 scripts/release.py         builds, verifies and indexes the release archives (.zbl)
+scripts/menu.py            menu for checking, git steps and release (Python)
 scripts/LICENSE            licence of the tools (Apache 2.0 with the Commons Clause)
 Menu for zangbundel-tools.bat  menu for the tools on Windows
 .github/workflows/         check on every push; release on every tag
@@ -97,6 +98,40 @@ python scripts/validate.py --strict --info .
 ```
 
 Every finding appears as `path:line LEVEL CODE message`, followed by the hash of each song and a summary. `--strict` also fails on warnings, `--info` shows additional notes. Before every commit the check must pass without errors and without warnings. On GitHub the same check runs automatically on every push.
+
+### Menu in Python
+
+`scripts/menu.py` leads through the whole process up to the release. Start it in the library folder or from anywhere:
+
+```
+python scripts/menu.py
+```
+
+Requirements: Python 3.8 or newer and git on the PATH.
+
+| Item | Purpose | Git command |
+|---|---|---|
+| 1 | Validate the library (`validate.py --strict --info`) | – |
+| 2 | Status: changed files, tags, comparison with GitHub | queries only |
+| 3 | Stage changes | `git add -A` |
+| 4 | Create a commit (asks for the message) | `git commit -m "…"` |
+| 5 | Set a tag (suggests the next free tag) | `git tag -a <tag>` |
+| 6 | Build a test archive from the last commit | – |
+| 7 | Build the release archive from a tag | – |
+| 8 | Verify the newest archive in `dist/` as the app does | – |
+| 9 | Push commits to GitHub | `git push origin main` |
+| 10 | Push the tag to GitHub – starts the release | `git push origin <tag>` |
+| 11 | After the green tick under "Actions": fetch the changes | `git pull origin main` |
+
+Release sequence: 1 → 3 → 4 → 5 → 7 → 8 → 9 → 10 → green tick on GitHub → 11.
+
+**Rules of the menu:**
+
+- Each menu item runs at most one git command that changes something. The command is shown and explained first and runs only after confirming with `j`.
+- Read-only queries (`git status`, `git fetch`, `git rev-list`, `git ls-remote` …) run without a question but are shown as "Abfrage" (query).
+- Before items 4, 9 and 10 the menu fetches the state of GitHub with `git fetch` and counts with `git rev-list --count HEAD..origin/main` whether there are commits that are missing locally. If so, it ends and asks to run item 11 (`git pull`) first.
+- Before commit and tag the library is validated; with errors or warnings it does not continue.
+- Item 10 pushes only when the tagged commit is already on GitHub (otherwise item 9 first) and the tag is not there yet. Afterwards the menu shows the link to "Actions" and the note about the green tick and item 11.
 
 ### Menu on Windows
 
