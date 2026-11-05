@@ -109,6 +109,8 @@ python scripts/menu.py
 
 Requirements: Python 3.8 or newer and git on the PATH.
 
+At start the menu asks for the language: `de` (German, the default with Enter) or `en` (English). All dialogs then appear in that language.
+
 | Item | Purpose | Git command |
 |---|---|---|
 | 1 | Validate the library (`validate.py --strict --info`) | – |
@@ -123,7 +125,7 @@ Requirements: Python 3.8 or newer and git on the PATH.
 | 10 | Push the tag to GitHub – starts the release | `git push origin <tag>` |
 | 11 | After the green tick under "Actions": fetch the changes | `git pull origin main` |
 
-Release sequence: 1 → 3 → 4 → 5 → 7 → 8 → 9 → 10 → green tick on GitHub → 11.
+Release sequence: 1 → 3 → 4 → 5 (→ 7 → 8) → 9 → 10 → green tick on GitHub → 11. Items 7 and 8 are an optional local test; GitHub builds the release itself.
 
 **Rules of the menu:**
 

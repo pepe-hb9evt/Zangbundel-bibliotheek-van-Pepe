@@ -109,6 +109,8 @@ python scripts/menu.py
 
 Voraussetzungen: Python 3.8 oder neuer und Git im PATH.
 
+Beim Start fragt das Menü nach der Sprache: `de` (Deutsch, Standard mit Enter) oder `en` (Englisch). Alle Dialoge erscheinen dann in dieser Sprache.
+
 | Punkt | Zweck | Git-Befehl |
 |---|---|---|
 | 1 | Bibliothek prüfen (`validate.py --strict --info`) | – |
@@ -123,7 +125,7 @@ Voraussetzungen: Python 3.8 oder neuer und Git im PATH.
 | 10 | Tag zu GitHub pushen – startet das Release | `git push origin <Tag>` |
 | 11 | Nach dem grünen Haken unter «Actions»: Änderungen holen | `git pull origin main` |
 
-Ablauf für ein Release: 1 → 3 → 4 → 5 → 7 → 8 → 9 → 10 → grüner Haken auf GitHub → 11.
+Ablauf für ein Release: 1 → 3 → 4 → 5 (→ 7 → 8) → 9 → 10 → grüner Haken auf GitHub → 11. Die Punkte 7 und 8 sind ein freiwilliger lokaler Test; das Release selbst baut GitHub.
 
 **Regeln des Menüs:**
 
