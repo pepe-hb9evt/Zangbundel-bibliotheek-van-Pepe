@@ -1,11 +1,17 @@
-Deutsche Lieder - Zangbundel library "pepe-deutsche-lieder"
+Zangbundel bibliotheek van Pepe
 
 All songs in this library are in the public domain: their lyricists and
 composers died more than 70 years ago, or the songs are traditional.
 
 The collection itself (the selection, the transcriptions, the metadata and
-this documentation) is dedicated to the public domain under the
+this documentation) and the two menus in the root folder
+(menu-with-tutorial-for-release-process.py, menu-for-release-process.bat)
+are dedicated to the public domain under the
 Creative Commons CC0 1.0 Universal Public Domain Dedication.
+
+The tools under scripts/ are not covered by this dedication; they are
+licensed under the Apache License 2.0 with the Commons Clause, see
+scripts/LICENSE.
 
 To the extent possible under law, the maintainer has waived all copyright
 and related or neighboring rights to this collection. You can copy, modify,

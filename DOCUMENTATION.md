@@ -1,6 +1,14 @@
-# German Songs – Documentation
+# Zangbundel bibliotheek van Pepe
 
-German original: [DOCUMENTATION_deutsch_german.md](DOCUMENTATION_deutsch_german.md)
+# Documentation
+
+Documentation for the project "**[Zangbundel-bibliotheek-van-Pepe](https://github.com/pepe-hb9evt/Zangbundel-bibliotheek-van-Pepe)**" on GitHub.
+
+( **Deutsche Version** dieses Dokuments verfügbar: [DOCUMENTATION_deutsch_german.md](DOCUMENTATION_deutsch_german.md) )
+
+This is a detailed documentation of the song library and its tools. For a short overview, see the English [README](README.md).
+
+<br>
 
 ## 1. Repository layout
 
@@ -11,9 +19,9 @@ songs/                     one ChordPro file (.cho) per song
 releases.json              release index; created automatically by the first release
 scripts/validate.py        checks the library against the rules of the format
 scripts/release.py         builds, verifies and indexes the release archives (.zbl)
-scripts/menu.py            menu for checking, git steps and release (Python)
 scripts/LICENSE            licence of the tools (Apache 2.0 with the Commons Clause)
-Menu for zangbundel-tools.bat  menu for the tools on Windows
+menu-with-tutorial-for-release-process.py  menu for checking, git steps and release (Python)
+menu-for-release-process.bat  menu for the tools on Windows
 .github/workflows/         check on every push; release on every tag
 .gitignore                 allow-list: only explicitly listed files go into the repository
 .gitattributes             pins the line endings (LF) so hashes are identical everywhere
@@ -101,10 +109,10 @@ Every finding appears as `path:line LEVEL CODE message`, followed by the hash of
 
 ### Menu in Python
 
-`scripts/menu.py` leads through the whole process up to the release. Start it in the library folder or from anywhere:
+`menu-with-tutorial-for-release-process.py` leads through the whole process up to the release. Start it in the library folder or from anywhere:
 
 ```
-python scripts/menu.py
+python menu-with-tutorial-for-release-process.py
 ```
 
 Requirements: Python 3.8 or newer and git on the PATH.
@@ -137,7 +145,7 @@ Release sequence: 1 → 3 → 4 → 5 (→ 7 → 8) → 9 → 10 → green tick 
 
 ### Menu on Windows
 
-`Menu for zangbundel-tools.bat` calls the tools with the right parameters. A double click is enough; the menu always works in the library folder.
+`menu-for-release-process.bat` calls the tools with the right parameters. A double click is enough; the menu always works in the library folder.
 
 | Item | Call | Purpose |
 |---|---|---|
@@ -206,12 +214,28 @@ Singers do not need the library; the leader's phone pushes the songs over Blueto
 
 The library id `pepe-deutsche-lieder` must not change, otherwise the app sees a new library.
 
-## 9. Licences
+## 9. Vibe coding declaration
+
+This software was created by **vibe coding**: As the author, I specified the requirements and the intended functionality and extended them in several stages; the AI wrote and adapted the code accordingly each time. The project documentation (README etc.) was also written with AI support.
+
+I tested the result thoroughly for its functionality. The tests were limited to the externally observable behaviour (**black-box tests**).
+
+I have neither read the Python code itself nor checked it for quality or security. The only check was whether the code is well commented in English, as this was one of the requirements.
+
+Use at your own risk (see also the [licence](LICENSE)). Anyone who reviews the code and finds bugs or vulnerabilities is warmly invited to open an [issue on GitHub](https://github.com/pepe-hb9evt/Zangbundel-bibliotheek-van-Pepe/issues).
+
+## 10. Licences
 
 | Part | Licence |
 |---|---|
 | Songs | Public domain; marked in the song with `{meta: license public-domain}` |
 | Collection (selection, transcriptions, metadata, documentation) | CC0 1.0, see [LICENSE](LICENSE) |
+| Menus in the root folder (`menu-with-tutorial-for-release-process.py`, `menu-for-release-process.bat`) | CC0 1.0, see [LICENSE](LICENSE) |
 | Tools under `scripts/` | Apache 2.0 with the Commons Clause, © Remko Welling, PE1MEW, see [scripts/LICENSE](scripts/LICENSE) |
 
 The tools may be used, modified and shared, but not sold. `scripts/LICENSE` must stay unchanged.
+
+## 11. Author
+
+Pepe HB9EVT, https://github.com/pepe-hb9evt
+with support from the AI Claude by Anthropic (see chapter [Vibe coding declaration](#9-vibe-coding-declaration))

@@ -1,6 +1,14 @@
-# Deutsche Lieder – Dokumentation
+# Zangbundel bibliotheek van Pepe
 
-English version: [DOCUMENTATION.md](DOCUMENTATION.md)
+# Dokumentation
+
+Dokumentation zum Projekt "**[Zangbundel-bibliotheek-van-Pepe](https://github.com/pepe-hb9evt/Zangbundel-bibliotheek-van-Pepe)**" auf GitHub.
+
+( **English version** of this document available: [DOCUMENTATION.md](DOCUMENTATION.md) )
+
+Dies ist eine ausführliche Dokumentation der Liederbibliothek und ihrer Werkzeuge. Für einen kurzen Überblick konsultiere das deutschsprachige [README](README_deutsch_german.md).
+
+<br>
 
 ## 1. Aufbau des Repositorys
 
@@ -11,9 +19,9 @@ songs/                     eine ChordPro-Datei (.cho) pro Lied
 releases.json              Release-Index; wird beim ersten Release automatisch erzeugt
 scripts/validate.py        prüft die Bibliothek nach den Regeln des Formats
 scripts/release.py         baut, prüft und indexiert die Release-Archive (.zbl)
-scripts/menu.py            Menü für Prüfen, Git-Schritte und Release (Python)
 scripts/LICENSE            Lizenz der Werkzeuge (Apache 2.0 mit Commons Clause)
-Menu for zangbundel-tools.bat  Menü für die Werkzeuge unter Windows
+menu-with-tutorial-for-release-process.py  Menü für Prüfen, Git-Schritte und Release (Python)
+menu-for-release-process.bat  Menü für die Werkzeuge unter Windows
 .github/workflows/         Prüfung bei jedem Push; Release bei jedem Tag
 .gitignore                 Allow-List: nur ausdrücklich genannte Dateien kommen ins Repository
 .gitattributes             legt die Zeilenenden fest (LF), damit Prüfsummen überall gleich sind
@@ -101,10 +109,10 @@ Jeder Befund erscheint als `Pfad:Zeile STUFE CODE Meldung`, danach pro Lied die 
 
 ### Menü in Python
 
-`scripts/menu.py` führt durch den ganzen Ablauf bis zum Release. Start im Ordner der Bibliothek oder von überall:
+`menu-with-tutorial-for-release-process.py` führt durch den ganzen Ablauf bis zum Release. Start im Ordner der Bibliothek oder von überall:
 
 ```
-python scripts/menu.py
+python menu-with-tutorial-for-release-process.py
 ```
 
 Voraussetzungen: Python 3.8 oder neuer und Git im PATH.
@@ -137,7 +145,7 @@ Ablauf für ein Release: 1 → 3 → 4 → 5 (→ 7 → 8) → 9 → 10 → grü
 
 ### Menü unter Windows
 
-`Menu for zangbundel-tools.bat` ruft die Werkzeuge mit den passenden Parametern auf. Doppelklick genügt; das Menü arbeitet immer im Ordner der Bibliothek.
+`menu-for-release-process.bat` ruft die Werkzeuge mit den passenden Parametern auf. Doppelklick genügt; das Menü arbeitet immer im Ordner der Bibliothek.
 
 | Punkt | Aufruf | Zweck |
 |---|---|---|
@@ -206,12 +214,28 @@ Die Sängerinnen und Sänger brauchen die Bibliothek nicht; das Leiter-Handy sch
 
 Die Bibliotheks-ID `pepe-deutsche-lieder` darf nicht geändert werden, sonst sieht die App eine neue Bibliothek.
 
-## 9. Lizenzen
+## 9. Vibe-Coding-Deklaration
+
+Diese Software wurde mittels **Vibe Coding** erstellt: Als Autor habe ich die Anforderungen und die beabsichtigte Funktionalität spezifiziert und in mehreren Etappen ergänzt; die KI hat den Code jeweils entsprechend geschrieben und angepasst. Auch die Projektdokumentation (README usw.) wurde KI-unterstützt verfasst.
+
+Das Ergebnis habe ich bezüglich Funktionalität eingehend geprüft. Die Tests beschränkten sich auf das von aussen beobachtbare Verhalten (**Black-Box-Tests**).
+
+Den Python-Code selbst habe ich weder gelesen noch bezüglich Qualität oder Sicherheit geprüft. Geprüft wurde lediglich, ob der Code gut und in englischer Sprache kommentiert ist, da dies eine der Vorgaben war.
+
+Die Nutzung erfolgt auf eigenes Risiko (siehe auch die [Lizenz](LICENSE)). Wer den Code prüft und dabei Fehler oder Schwachstellen findet, ist herzlich eingeladen, ein [Issue auf GitHub](https://github.com/pepe-hb9evt/Zangbundel-bibliotheek-van-Pepe/issues) zu eröffnen.
+
+## 10. Lizenzen
 
 | Teil | Lizenz |
 |---|---|
 | Lieder | Public Domain; im Lied mit `{meta: license public-domain}` gekennzeichnet |
 | Sammlung (Auswahl, Abschriften, Metadaten, Dokumentation) | CC0 1.0, siehe [LICENSE](LICENSE) |
+| Menüs im Hauptordner (`menu-with-tutorial-for-release-process.py`, `menu-for-release-process.bat`) | CC0 1.0, siehe [LICENSE](LICENSE) |
 | Werkzeuge unter `scripts/` | Apache 2.0 mit Commons Clause, © Remko Welling, PE1MEW, siehe [scripts/LICENSE](scripts/LICENSE) |
 
 Die Werkzeuge dürfen genutzt, geändert und weitergegeben, aber nicht verkauft werden. `scripts/LICENSE` muss unverändert bleiben.
+
+## 11. Autor
+
+Pepe HB9EVT, https://github.com/pepe-hb9evt
+mit Unterstützung durch die KI Claude von Anthropic (vgl. Kapitel [Vibe-Coding-Deklaration](#9-vibe-coding-deklaration))
