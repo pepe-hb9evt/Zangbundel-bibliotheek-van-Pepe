@@ -121,27 +121,30 @@ At start the menu asks for the language: `de` (German, the default with Enter) o
 
 | Item | Purpose | Git command |
 |---|---|---|
-| 1 | Validate the library (`validate.py --strict --info`) | – |
-| 2 | Status: changed files, tags, comparison with GitHub | queries only |
-| 3 | Stage changes | `git add -A` |
-| 4 | Create a commit (asks for the message) | `git commit -m "…"` |
-| 5 | Set a tag (suggests the next free tag) | `git tag -a <tag>` |
-| 6 | Build a test archive from the last commit | – |
-| 7 | Build the release archive from a tag | – |
-| 8 | Verify the newest archive in `dist/` as the app does | – |
-| 9 | Push commits to GitHub | `git push origin main` |
-| 10 | Push the tag to GitHub – starts the release | `git push origin <tag>` |
-| 11 | After the green tick under "Actions": fetch the changes | `git pull origin main` |
+| 1 | Show or hide the explanations (tutorial) | – |
+| 2 | Validate the library (`validate.py --strict --info`) | – |
+| 3 | Status: changed files, tags, comparison with GitHub | queries only |
+| 4 | Stage changes | `git add -A` |
+| 5 | Create a commit (asks for the message) | `git commit -m "…"` |
+| 6 | Set a tag (suggests the next free tag) | `git tag -a <tag>` |
+| 7 | Build a test archive from the last commit | – |
+| 8 | Build the release archive from a tag | – |
+| 9 | Verify the newest archive in `dist/` as the app does | – |
+| 10 | Push commits to GitHub | `git push origin main` |
+| 11 | Push the tag to GitHub – starts the release | `git push origin <tag>` |
+| 12 | After the green tick under "Actions": fetch the changes | `git pull origin main` |
 
-Release sequence: 1 → 3 → 4 → 5 (→ 7 → 8) → 9 → 10 → green tick on GitHub → 11. Items 7 and 8 are an optional local test; GitHub builds the release itself.
+Release sequence: 2 → 4 → 5 → 6 (→ 8 → 9) → 10 → 11 → green tick on GitHub → 12. Items 8 and 9 are an optional local test; GitHub builds the release itself.
+
+**Explanations (tutorial):** they are hidden at start; item 1 shows or hides them again for the current session. Without explanations, everything needed for safe work stays visible: the title of the step, every git command that changes something with its confirmation, inputs, results, warnings, stops, the output of the tools and, after the tag push, a short line with the link to "Actions". Only the explanatory texts, the "Afterwards …" sentences, the "Query: …" and "Call: …" lines, progress messages and hints to the next step are hidden.
 
 **Rules of the menu:**
 
-- Each menu item runs at most one git command that changes something. The command is shown and explained first and runs only after confirming with `j`.
-- Read-only queries (`git status`, `git fetch`, `git rev-list`, `git ls-remote` …) run without a question but are shown as "Abfrage" (query).
-- Before items 4, 9 and 10 the menu fetches the state of GitHub with `git fetch` and counts with `git rev-list --count HEAD..origin/main` whether there are commits that are missing locally. If so, it ends and asks to run item 11 (`git pull`) first.
+- Each menu item runs at most one git command that changes something. The command is shown first and runs only after confirming with `y`.
+- Read-only queries (`git status`, `git fetch`, `git rev-list`, `git ls-remote` …) run without a question; with explanations shown they are listed as "Query".
+- Before items 5, 10 and 11 the menu fetches the state of GitHub with `git fetch` and counts with `git rev-list --count HEAD..origin/main` whether there are commits that are missing locally. If so, it ends and asks to run item 12 (`git pull`) first.
 - Before commit and tag the library is validated; with errors or warnings it does not continue.
-- Item 10 pushes only when the tagged commit is already on GitHub (otherwise item 9 first) and the tag is not there yet. Afterwards the menu shows the link to "Actions" and the note about the green tick and item 11.
+- Item 11 pushes only when the tagged commit is already on GitHub (otherwise item 10 first) and the tag is not there yet. Afterwards the menu shows the link to "Actions" and the note about the green tick and item 12.
 
 ### Menu on Windows
 

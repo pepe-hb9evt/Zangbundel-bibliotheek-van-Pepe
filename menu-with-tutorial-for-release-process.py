@@ -11,6 +11,7 @@ Before steps that would conflict with newer commits on GitHub, the menu fetches
 from GitHub and stops if there is something to pull.
 
 All dialogs are available in German and English; the language is chosen at start.
+Menu item 1 shows or hides the explanations (tutorial); they are hidden at start.
 
 Lies in the root folder of the library. Run from anywhere:
     python menu-with-tutorial-for-release-process.py
@@ -43,6 +44,9 @@ DUTCH_REPLY = "Oh come on, Remko, your English is good enough. You don\u2019t ne
 
 # Language of the dialogs ('de' or 'en'), chosen at start.
 language = DEFAULT_LANGUAGE
+
+# Explanations (tutorial) on or off; off at start, toggled by menu item 1.
+tutorial = False
 
 # Tag chosen in this session (set by "create tag", offered as default later).
 session_tag = None
@@ -117,14 +121,21 @@ def say(text='', wrap=True):
     print(wrap_text(text) if wrap else text, flush=True)
 
 
+def teach(text='', wrap=True):
+    """Print an explanation; shown only when the tutorial is switched on."""
+    if tutorial:
+        say(text, wrap)
+
+
 def explain(title, text):
-    """Print a step title and a short explanation of what happens now."""
+    """Print a step title; the explanation of what happens now only with the tutorial."""
     say()
     say(LINE)
     say(title)
     say(LINE)
-    for paragraph in text.strip().split('\n'):
-        say(paragraph.strip())
+    if tutorial:
+        for paragraph in text.strip().split('\n'):
+            say(paragraph.strip())
     say()
 
 
@@ -159,7 +170,7 @@ def show_command(args):
 def git_query(*args):
     """Run a read-only git command and return (exit code, output). It is shown, not confirmed."""
     cmd = ['git'] + list(args)
-    say('  %s: %s' % (tr('Abfrage', 'Query'), show_command(cmd)), wrap=False)
+    teach('  %s: %s' % (tr('Abfrage', 'Query'), show_command(cmd)), wrap=False)
     result = subprocess.run(cmd, cwd=REPO_DIR, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                             universal_newlines=True, encoding='utf-8', errors='replace')
     return result.returncode, result.stdout.strip()
@@ -172,8 +183,9 @@ def git_change(args, what):
     say()
     say('    %s' % show_command(cmd), wrap=False)
     say()
-    say(what)
-    say()
+    if tutorial:
+        say(what)
+        say()
     if not confirm(tr('Befehl ausführen?', 'Run the command?')):
         say(tr('Abgebrochen – es wurde nichts geändert.', 'Cancelled – nothing was changed.'))
         return False
@@ -192,8 +204,8 @@ def git_change(args, what):
 def run_tool(script, *args):
     """Run one of the library tools with the current Python. Returns its exit code."""
     cmd = [sys.executable, os.path.join('scripts', script)] + list(args)
-    say('  %s: %s' % (tr('Aufruf', 'Call'), show_command(['python'] + cmd[1:])), wrap=False)
-    say()
+    teach('  %s: %s' % (tr('Aufruf', 'Call'), show_command(['python'] + cmd[1:])), wrap=False)
+    teach()
     result = subprocess.run(cmd, cwd=REPO_DIR)
     say()
     if result.returncode == 0:
@@ -245,8 +257,8 @@ def fetch_and_count_incoming():
 
 def require_nothing_to_pull():
     """Stop the program when GitHub has commits that are not here yet. False: cannot check."""
-    say(tr('Prüfe, ob es auf GitHub Neues gibt, das zuerst geholt werden muss ...',
-           'Checking whether GitHub has new commits that must be pulled first ...'))
+    teach(tr('Prüfe, ob es auf GitHub Neues gibt, das zuerst geholt werden muss ...',
+             'Checking whether GitHub has new commits that must be pulled first ...'))
     incoming = fetch_and_count_incoming()
     if incoming is None:
         say(tr('Dieser Schritt wird abgebrochen, weil nicht geprüft werden konnte, ob etwas zu '
@@ -268,13 +280,13 @@ def require_nothing_to_pull():
             'Please clean this up first: restart the menu and run the last menu item "git pull", '
             'or enter "git pull" in a terminal.\n'
             'The menu ends now.') % incoming)
-    say(tr('OK: Auf GitHub gibt es nichts Neues.', 'OK: There is nothing new on GitHub.'))
+    teach(tr('OK: Auf GitHub gibt es nichts Neues.', 'OK: There is nothing new on GitHub.'))
     return True
 
 
 def library_is_valid():
-    say(tr('Prüfe die Bibliothek (validate.py --strict) ...',
-           'Validating the library (validate.py --strict) ...'))
+    teach(tr('Prüfe die Bibliothek (validate.py --strict) ...',
+             'Validating the library (validate.py --strict) ...'))
     return run_tool('validate.py', '--strict', '.') == 0
 
 
@@ -340,7 +352,7 @@ def actions_url():
 # ---------------------------------------------------------------------------
 
 def item_validate():
-    explain(tr('1  Bibliothek prüfen', '1  Validate library'),
+    explain(tr('2  Bibliothek prüfen', '2  Validate library'),
             tr('validate.py prüft zangbundel.json und alle Lieder unter songs/ nach den Regeln des '
                'Zangbundel-Formats.\nFehler und Warnungen müssen behoben werden, bevor ein Release '
                'gemacht wird. Es wird nichts verändert.',
@@ -351,7 +363,7 @@ def item_validate():
 
 
 def item_status():
-    explain(tr('2  Status anzeigen', '2  Show status'),
+    explain(tr('3  Status anzeigen', '3  Show status'),
             tr('Zeigt den Stand des Repositorys: Branch, geänderte Dateien, Tags und den Vergleich '
                'mit GitHub.\nEs werden nur Abfragen ausgeführt; es wird nichts verändert.',
                'Shows the state of the repository: branch, changed files, tags and the comparison '
@@ -375,12 +387,12 @@ def item_status():
     if code == 0:
         say(tr('Lokal neu (zu pushen): %s Commit(s)', 'New locally (to push): %s commit(s)') % ahead)
     if incoming:
-        say(tr('Hinweis: Vor Commit oder Push zuerst Menüpunkt 11 (git pull) ausführen.',
-               'Note: run menu item 11 (git pull) before committing or pushing.'))
+        say(tr('Hinweis: Vor Commit oder Push zuerst Menüpunkt 12 (git pull) ausführen.',
+               'Note: run menu item 12 (git pull) before committing or pushing.'))
 
 
 def item_add():
-    explain(tr('3  Änderungen vormerken (git add)', '3  Stage changes (git add)'),
+    explain(tr('4  Änderungen vormerken (git add)', '4  Stage changes (git add)'),
             tr('Alle geänderten und neuen Dateien werden für den nächsten Commit vorgemerkt.\n'
                'Was ins Repository darf, bestimmt die Allow-List in .gitignore; anderes wird '
                'übergangen.',
@@ -396,13 +408,13 @@ def item_add():
     say()
     git_change(['add', '-A'],
                tr('Danach sind die Änderungen vorgemerkt, aber noch nicht committet (nächster '
-                  'Schritt: Menüpunkt 4).',
+                  'Schritt: Menüpunkt 5).',
                   'Afterwards the changes are staged but not yet committed (next step: menu '
-                  'item 4).'))
+                  'item 5).'))
 
 
 def item_commit():
-    explain(tr('4  Commit erstellen (git commit)', '4  Create commit (git commit)'),
+    explain(tr('5  Commit erstellen (git commit)', '5  Create commit (git commit)'),
             tr('Die vorgemerkten Änderungen werden als neuer Stand (Commit) gespeichert.\n'
                'Vorher wird geprüft, ob auf GitHub etwas Neues liegt, und die Bibliothek wird '
                'geprüft.',
@@ -413,8 +425,8 @@ def item_commit():
         return
     code, _ = git_query('diff', '--cached', '--quiet')
     if code == 0:
-        say(tr('Es ist nichts vorgemerkt. Zuerst Menüpunkt 3 (git add) ausführen.',
-               'Nothing is staged. Run menu item 3 (git add) first.'))
+        say(tr('Es ist nichts vorgemerkt. Zuerst Menüpunkt 4 (git add) ausführen.',
+               'Nothing is staged. Run menu item 4 (git add) first.'))
         return
     code, out = git_query('diff', '--cached', '--stat')
     say(out, wrap=False)
@@ -426,20 +438,20 @@ def item_commit():
     message = ask(tr('Commit-Nachricht', 'Commit message'), 'Update library')
     git_change(['commit', '-m', message],
                tr('Danach ist der Commit lokal gespeichert, aber noch nicht auf GitHub (dafür '
-                  'später Menüpunkt 9).',
-                  'Afterwards the commit is saved locally but not yet on GitHub (menu item 9 does '
+                  'später Menüpunkt 10).',
+                  'Afterwards the commit is saved locally but not yet on GitHub (menu item 10 does '
                   'that later).'))
 
 
 def item_tag():
     global session_tag
-    explain(tr('5  Tag setzen (git tag)', '5  Set tag (git tag)'),
+    explain(tr('6  Tag setzen (git tag)', '6  Set tag (git tag)'),
             tr('Ein Tag gibt dem letzten Commit einen Release-Namen, z. B. v2026.11.0 '
                '(v<Jahr>.<Monat>.<Nummer>, kleines v).\nAus diesem Tag wird das Release gebaut; auf '
-               'GitHub startet der Push des Tags (Menüpunkt 10) die Release-Erstellung.',
+               'GitHub startet der Push des Tags (Menüpunkt 11) die Release-Erstellung.',
                'A tag gives the last commit a release name, e.g. v2026.11.0 '
                '(v<year>.<month>.<sequence>, lower-case v).\nThe release is built from this tag; on '
-               'GitHub, pushing the tag (menu item 10) starts the release.'))
+               'GitHub, pushing the tag (menu item 11) starts the release.'))
     code, out = git_query('status', '--porcelain')
     if out:
         say(tr('ACHTUNG: Es gibt Änderungen, die noch nicht committet sind. Sie sind NICHT im Tag '
@@ -449,8 +461,8 @@ def item_tag():
         say(out, wrap=False)
         if not confirm(tr('Trotzdem den Tag auf den letzten Commit setzen?',
                           'Set the tag on the last commit anyway?')):
-            say(tr('Abgebrochen. Zuerst Menüpunkte 3 und 4 ausführen.',
-                   'Cancelled. Run menu items 3 and 4 first.'))
+            say(tr('Abgebrochen. Zuerst Menüpunkte 4 und 5 ausführen.',
+                   'Cancelled. Run menu items 4 and 5 first.'))
             return
     tag = ask(tr('Name des Tags', 'Tag name'), suggest_next_tag())
     if not TAG_PATTERN.match(tag):
@@ -470,14 +482,14 @@ def item_tag():
     say()
     if git_change(['tag', '-a', tag, '-m', 'Release %s' % tag],
                   tr('Danach trägt der letzte Commit lokal den Tag %s (nächster Schritt: '
-                     'Menüpunkt 7 oder direkt 9).',
+                     'Menüpunkt 8 oder direkt 10).',
                      'Afterwards the last commit carries the tag %s locally (next step: menu '
-                     'item 7, or 9 directly).') % tag):
+                     'item 8, or 10 directly).') % tag):
         session_tag = tag
 
 
 def item_build_test():
-    explain(tr('6  Test-Archiv bauen (ohne Tag)', '6  Build test archive (no tag)'),
+    explain(tr('7  Test-Archiv bauen (ohne Tag)', '7  Build test archive (no tag)'),
             tr('release.py baut ein Archiv aus dem letzten Commit, ohne dass ein Tag nötig ist.\n'
                'Nicht committete Änderungen sind NICHT enthalten. Das Archiv landet in dist/ und '
                'dient nur zum Testen. Es wird nichts in Git verändert.',
@@ -488,7 +500,7 @@ def item_build_test():
 
 
 def item_build_release():
-    explain(tr('7  Release-Archiv aus Tag bauen', '7  Build release archive from tag'),
+    explain(tr('8  Release-Archiv aus Tag bauen', '8  Build release archive from tag'),
             tr('release.py baut das Archiv aus dem Commit, der den Tag trägt – genau so, wie es '
                'später auf GitHub gebaut wird.\nDas Archiv landet in dist/. Es wird nichts in Git '
                'verändert.',
@@ -499,14 +511,14 @@ def item_build_release():
     if not tag:
         return
     if not tag_exists_locally(tag):
-        say(tr('Der Tag %s existiert nicht (Gross-/Kleinschreibung beachten). Zuerst Menüpunkt 5.',
-               'The tag %s does not exist (tags are case-sensitive). Run menu item 5 first.') % tag)
+        say(tr('Der Tag %s existiert nicht (Gross-/Kleinschreibung beachten). Zuerst Menüpunkt 6.',
+               'The tag %s does not exist (tags are case-sensitive). Run menu item 6 first.') % tag)
         return
     run_tool('release.py', 'build', '--tag', tag, '--out', DIST_DIR)
 
 
 def item_verify():
-    explain(tr('8  Archiv prüfen', '8  Verify archive'),
+    explain(tr('9  Archiv prüfen', '9  Verify archive'),
             tr('release.py prüft das neueste Archiv in dist/ so, wie es die App beim Import tut.\n'
                'Es wird nichts verändert.',
                'release.py checks the newest archive in dist/ the way the app does on import.\n'
@@ -516,8 +528,8 @@ def item_verify():
     if os.path.isdir(folder):
         archives = [os.path.join(folder, name) for name in os.listdir(folder) if name.endswith('.zbl')]
     if not archives:
-        say(tr('In dist/ liegt kein Archiv. Zuerst Menüpunkt 6 oder 7.',
-               'There is no archive in dist/. Run menu item 6 or 7 first.'))
+        say(tr('In dist/ liegt kein Archiv. Zuerst Menüpunkt 7 oder 8.',
+               'There is no archive in dist/. Run menu item 7 or 8 first.'))
         return
     newest = max(archives, key=os.path.getmtime)
     say(tr('Neuestes Archiv: %s', 'Newest archive: %s') % os.path.relpath(newest, REPO_DIR))
@@ -525,8 +537,8 @@ def item_verify():
 
 
 def item_push_main():
-    explain(tr('9  Commits zu GitHub pushen (git push origin main)',
-               '9  Push commits to GitHub (git push origin main)'),
+    explain(tr('10  Commits zu GitHub pushen (git push origin main)',
+               '10  Push commits to GitHub (git push origin main)'),
             tr('Die lokalen Commits werden auf GitHub hochgeladen.\nAuf GitHub prüft danach der '
                'Workflow "Validate library" die Bibliothek automatisch.',
                'The local commits are uploaded to GitHub.\nOn GitHub the workflow "Validate '
@@ -551,8 +563,8 @@ def item_push_main():
 
 
 def item_push_tag():
-    explain(tr('10  Tag zu GitHub pushen (git push origin <Tag>)',
-               '10  Push tag to GitHub (git push origin <tag>)'),
+    explain(tr('11  Tag zu GitHub pushen (git push origin <Tag>)',
+               '11  Push tag to GitHub (git push origin <tag>)'),
             tr('Der Tag wird auf GitHub hochgeladen. Das startet dort den Workflow "Release": er '
                'baut das Archiv, veröffentlicht es unter "Releases" und aktualisiert releases.json.',
                'The tag is uploaded to GitHub. This starts the workflow "Release" there: it builds '
@@ -561,25 +573,25 @@ def item_push_tag():
     if not tag:
         return
     if not tag_exists_locally(tag):
-        say(tr('Der Tag %s existiert lokal nicht. Zuerst Menüpunkt 5.',
-               'The tag %s does not exist locally. Run menu item 5 first.') % tag)
+        say(tr('Der Tag %s existiert lokal nicht. Zuerst Menüpunkt 6.',
+               'The tag %s does not exist locally. Run menu item 6 first.') % tag)
         return
     on_github = tag_on_github(tag)
     if on_github is None:
         return
     if on_github:
         say(tr('Der Tag %s ist schon auf GitHub – nichts zu pushen. Für ein neues Release einen '
-               'neuen Tag setzen (Menüpunkt 5).',
+               'neuen Tag setzen (Menüpunkt 6).',
                'The tag %s is already on GitHub – nothing to push. For a new release, set a new '
-               'tag (menu item 5).') % tag)
+               'tag (menu item 6).') % tag)
         return
     if not require_nothing_to_pull():
         return
     code, _ = git_query('merge-base', '--is-ancestor', tag, '%s/%s' % (REMOTE, MAIN_BRANCH))
     if code != 0:
-        say(tr('Der Commit mit dem Tag %s ist noch nicht auf GitHub. Zuerst Menüpunkt 9 '
+        say(tr('Der Commit mit dem Tag %s ist noch nicht auf GitHub. Zuerst Menüpunkt 10 '
                '(git push origin main) ausführen.',
-               'The commit with the tag %s is not on GitHub yet. Run menu item 9 '
+               'The commit with the tag %s is not on GitHub yet. Run menu item 10 '
                '(git push origin main) first.') % tag)
         return
     if git_change(['push', REMOTE, tag],
@@ -588,25 +600,31 @@ def item_push_tag():
         url = actions_url()
         say()
         say(LINE)
-        say(tr('Auf GitHub im Repository unter "Actions" prüfen, ob die Release-Erstellung einen '
-               'grünen Haken bekommen hat.',
-               'On GitHub, check under "Actions" in the repository whether the release run got a '
-               'green tick.'))
-        if url:
-            say('    %s' % url, wrap=False)
-        say(tr('Wenn als Symbol ein Kreis dargestellt wird, ist die Release-Erstellung noch am '
-               'Laufen.',
-               'If a circle is shown as the symbol, the release run is still in progress.'))
-        say(tr('Sobald der grüne Haken da ist, muss noch ein "git pull" ausgeführt werden '
-               '(Menüpunkt 11), da releases.json auf GitHub in neuer Version vorliegt.',
-               'As soon as the green tick is there, a "git pull" must still be run (menu item 11), '
-               'because releases.json on GitHub is in a new version.'))
+        if tutorial:
+            say(tr('Auf GitHub im Repository unter "Actions" prüfen, ob die Release-Erstellung '
+                   'einen grünen Haken bekommen hat.',
+                   'On GitHub, check under "Actions" in the repository whether the release run '
+                   'got a green tick.'))
+            if url:
+                say('    %s' % url, wrap=False)
+            say(tr('Wenn als Symbol ein Kreis dargestellt wird, ist die Release-Erstellung noch '
+                   'am Laufen.',
+                   'If a circle is shown as the symbol, the release run is still in progress.'))
+            say(tr('Sobald der grüne Haken da ist, muss noch ein "git pull" ausgeführt werden '
+                   '(Menüpunkt 12), da releases.json auf GitHub in neuer Version vorliegt.',
+                   'As soon as the green tick is there, a "git pull" must still be run '
+                   '(menu item 12), because releases.json on GitHub is in a new version.'))
+        else:
+            say(tr('Grünen Haken unter "Actions" abwarten, dann Menüpunkt 12:',
+                   'Wait for the green tick under "Actions", then menu item 12:'))
+            if url:
+                say('    %s' % url, wrap=False)
         say(LINE)
 
 
 def item_pull():
-    explain(tr('11  Nach dem grünen Haken: Änderungen holen (git pull)',
-               '11  After the green tick: fetch changes (git pull)'),
+    explain(tr('12  Nach dem grünen Haken: Änderungen holen (git pull)',
+               '12  After the green tick: fetch changes (git pull)'),
             tr('Holt die Commits, die auf GitHub neu sind – nach einem Release vor allem die neue '
                'releases.json.\nErst ausführen, wenn unter "Actions" der grüne Haken da ist.',
                'Fetches the commits that are new on GitHub – after a release mainly the new '
@@ -629,24 +647,45 @@ def item_pull():
                   'Afterwards the local state is the same as on GitHub.'))
 
 
+def item_toggle_tutorial():
+    """Switch the explanations (tutorial) on or off."""
+    global tutorial
+    tutorial = not tutorial
+    say()
+    if tutorial:
+        say(tr('Erläuterungstexte sind jetzt eingeblendet.', 'Explanations are now shown.'))
+    else:
+        say(tr('Erläuterungstexte sind jetzt ausgeblendet.', 'Explanations are now hidden.'))
+
+
+def toggle_labels():
+    """Label of menu item 1, depending on the current state (German, English)."""
+    if tutorial:
+        return 'Erläuterungstexte (Tutorial) ausblenden', 'Hide explanations (tutorial)'
+    return 'Erläuterungstexte (Tutorial) einblenden', 'Show explanations (tutorial)'
+
+
 # Menu entries: key, German label, English label, git command shown in brackets, function.
+# The labels of item 1 are set by toggle_labels(); items without a pause return to the menu at once.
 MENU = [
-    ('1', 'Bibliothek prüfen', 'Validate library', '', item_validate),
-    ('2', 'Status anzeigen (Vergleich mit GitHub)', 'Show status (comparison with GitHub)', '',
+    ('1', None, None, '', item_toggle_tutorial),
+    ('2', 'Bibliothek prüfen', 'Validate library', '', item_validate),
+    ('3', 'Status anzeigen (Vergleich mit GitHub)', 'Show status (comparison with GitHub)', '',
      item_status),
-    ('3', 'Änderungen vormerken', 'Stage changes', 'git add', item_add),
-    ('4', 'Commit erstellen', 'Create commit', 'git commit', item_commit),
-    ('5', 'Tag setzen', 'Set tag', 'git tag', item_tag),
-    ('6', 'Test-Archiv bauen (ohne Tag)', 'Build test archive (no tag)', '', item_build_test),
-    ('7', 'Release-Archiv aus Tag bauen', 'Build release archive from tag', '', item_build_release),
-    ('8', 'Neuestes Archiv in dist/ prüfen', 'Verify newest archive in dist/', '', item_verify),
-    ('9', 'Commits zu GitHub pushen', 'Push commits to GitHub', 'git push origin main',
+    ('4', 'Änderungen vormerken', 'Stage changes', 'git add', item_add),
+    ('5', 'Commit erstellen', 'Create commit', 'git commit', item_commit),
+    ('6', 'Tag setzen', 'Set tag', 'git tag', item_tag),
+    ('7', 'Test-Archiv bauen (ohne Tag)', 'Build test archive (no tag)', '', item_build_test),
+    ('8', 'Release-Archiv aus Tag bauen', 'Build release archive from tag', '', item_build_release),
+    ('9', 'Neuestes Archiv in dist/ prüfen', 'Verify newest archive in dist/', '', item_verify),
+    ('10', 'Commits zu GitHub pushen', 'Push commits to GitHub', 'git push origin main',
      item_push_main),
-    ('10', 'Tag zu GitHub pushen (startet Release)', 'Push tag to GitHub (starts release)',
+    ('11', 'Tag zu GitHub pushen (startet Release)', 'Push tag to GitHub (starts release)',
      'git push origin <Tag>', item_push_tag),
-    ('11', 'Nach grünem Haken: Änderungen holen', 'After green tick: fetch changes', 'git pull',
+    ('12', 'Nach grünem Haken: Änderungen holen', 'After green tick: fetch changes', 'git pull',
      item_pull),
 ]
+NO_PAUSE = (item_toggle_tutorial,)
 
 
 def show_menu():
@@ -654,7 +693,9 @@ def show_menu():
     say('=' * 66)
     say(tr('  Zangbundel-Bibliothek – Werkzeuge', '  Zangbundel library – tools'))
     say('=' * 66)
-    for key, label_de, label_en, command, _ in MENU:
+    for key, label_de, label_en, command, func in MENU:
+        if func is item_toggle_tutorial:
+            label_de, label_en = toggle_labels()
         label = tr(label_de, label_en)
         if command and language == 'en':
             command = command.replace('<Tag>', '<tag>')
@@ -662,8 +703,8 @@ def show_menu():
             wrap=False)
     say(tr('   0  Beenden', '   0  Exit'))
     say()
-    say(tr('  Ablauf für ein Release: 1 > 3 > 4 > 5 (> 7 > 8) > 9 > 10 > grüner Haken > 11',
-           '  Release sequence: 1 > 3 > 4 > 5 (> 7 > 8) > 9 > 10 > green tick > 11'))
+    say(tr('  Ablauf Release: 2 > 4 > 5 > 6 (> 8 > 9) > 10 > 11 > grüner Haken > 12',
+           '  Release sequence: 2 > 4 > 5 > 6 (> 8 > 9) > 10 > 11 > green tick > 12'))
     if session_tag:
         say(tr('  Tag in dieser Sitzung: %s', '  Tag in this session: %s') % session_tag)
     say()
@@ -686,7 +727,8 @@ def main():
                 say(tr('Unbekannte Auswahl.', 'Unknown choice.'))
                 continue
             func()
-            pause()
+            if func not in NO_PAUSE:
+                pause()
     except StopMenu as stop:
         say()
         say(LINE)

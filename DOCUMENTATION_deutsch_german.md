@@ -121,27 +121,30 @@ Beim Start fragt das Menü nach der Sprache: `de` (Deutsch, Standard mit Enter) 
 
 | Punkt | Zweck | Git-Befehl |
 |---|---|---|
-| 1 | Bibliothek prüfen (`validate.py --strict --info`) | – |
-| 2 | Status: geänderte Dateien, Tags, Vergleich mit GitHub | nur Abfragen |
-| 3 | Änderungen vormerken | `git add -A` |
-| 4 | Commit erstellen (fragt nach der Nachricht) | `git commit -m "…"` |
-| 5 | Tag setzen (schlägt den nächsten freien Tag vor) | `git tag -a <Tag>` |
-| 6 | Test-Archiv aus dem letzten Commit bauen | – |
-| 7 | Release-Archiv aus einem Tag bauen | – |
-| 8 | Neuestes Archiv in `dist/` prüfen wie die App | – |
-| 9 | Commits zu GitHub pushen | `git push origin main` |
-| 10 | Tag zu GitHub pushen – startet das Release | `git push origin <Tag>` |
-| 11 | Nach dem grünen Haken unter «Actions»: Änderungen holen | `git pull origin main` |
+| 1 | Erläuterungstexte (Tutorial) ein- bzw. ausblenden | – |
+| 2 | Bibliothek prüfen (`validate.py --strict --info`) | – |
+| 3 | Status: geänderte Dateien, Tags, Vergleich mit GitHub | nur Abfragen |
+| 4 | Änderungen vormerken | `git add -A` |
+| 5 | Commit erstellen (fragt nach der Nachricht) | `git commit -m "…"` |
+| 6 | Tag setzen (schlägt den nächsten freien Tag vor) | `git tag -a <Tag>` |
+| 7 | Test-Archiv aus dem letzten Commit bauen | – |
+| 8 | Release-Archiv aus einem Tag bauen | – |
+| 9 | Neuestes Archiv in `dist/` prüfen wie die App | – |
+| 10 | Commits zu GitHub pushen | `git push origin main` |
+| 11 | Tag zu GitHub pushen – startet das Release | `git push origin <Tag>` |
+| 12 | Nach dem grünen Haken unter «Actions»: Änderungen holen | `git pull origin main` |
 
-Ablauf für ein Release: 1 → 3 → 4 → 5 (→ 7 → 8) → 9 → 10 → grüner Haken auf GitHub → 11. Die Punkte 7 und 8 sind ein freiwilliger lokaler Test; das Release selbst baut GitHub.
+Ablauf für ein Release: 2 → 4 → 5 → 6 (→ 8 → 9) → 10 → 11 → grüner Haken auf GitHub → 12. Die Punkte 8 und 9 sind ein freiwilliger lokaler Test; das Release selbst baut GitHub.
+
+**Erläuterungstexte (Tutorial):** Beim Start sind sie ausgeblendet; Punkt 1 blendet sie für die laufende Sitzung ein oder wieder aus. Ohne Erläuterungen bleibt alles sichtbar, was für sicheres Arbeiten nötig ist: der Titel des Schritts, jeder ändernde Git-Befehl mit Bestätigung, Eingaben, Ergebnisse, Warnungen, Abbrüche, die Ausgaben der Werkzeuge und nach dem Tag-Push eine Kurzzeile mit dem Link zu «Actions». Ausgeblendet werden nur die Erklärtexte, die «Danach …»-Sätze, die Zeilen «Abfrage: …» und «Aufruf: …», Fortschrittsmeldungen und Hinweise auf den nächsten Schritt.
 
 **Regeln des Menüs:**
 
-- Jeder Menüpunkt führt höchstens einen Git-Befehl aus, der etwas verändert. Der Befehl wird vorher angezeigt und erklärt und läuft erst nach Bestätigung mit `j`.
-- Reine Abfragen (`git status`, `git fetch`, `git rev-list`, `git ls-remote` …) laufen ohne Rückfrage, werden aber als «Abfrage» angezeigt.
-- Vor Punkt 4, 9 und 10 holt das Menü mit `git fetch` den Stand von GitHub und zählt mit `git rev-list --count HEAD..origin/main`, ob dort Commits liegen, die lokal fehlen. Ist das so, beendet es sich mit der Aufforderung, zuerst Punkt 11 (`git pull`) auszuführen.
+- Jeder Menüpunkt führt höchstens einen Git-Befehl aus, der etwas verändert. Der Befehl wird vorher angezeigt und läuft erst nach Bestätigung mit `j`.
+- Reine Abfragen (`git status`, `git fetch`, `git rev-list`, `git ls-remote` …) laufen ohne Rückfrage, werden aber bei eingeblendeten Erläuterungen als «Abfrage» angezeigt.
+- Vor Punkt 5, 10 und 11 holt das Menü mit `git fetch` den Stand von GitHub und zählt mit `git rev-list --count HEAD..origin/main`, ob dort Commits liegen, die lokal fehlen. Ist das so, beendet es sich mit der Aufforderung, zuerst Punkt 12 (`git pull`) auszuführen.
 - Vor Commit und Tag wird die Bibliothek geprüft; bei Fehlern oder Warnungen geht es nicht weiter.
-- Punkt 10 pusht nur, wenn der Commit des Tags schon auf GitHub ist (sonst zuerst Punkt 9) und der Tag noch nicht dort liegt. Danach zeigt das Menü den Link zu «Actions» und den Hinweis auf den grünen Haken und Punkt 11.
+- Punkt 11 pusht nur, wenn der Commit des Tags schon auf GitHub ist (sonst zuerst Punkt 10) und der Tag noch nicht dort liegt. Danach zeigt das Menü den Link zu «Actions» und den Hinweis auf den grünen Haken und Punkt 12.
 
 ### Menü unter Windows
 
