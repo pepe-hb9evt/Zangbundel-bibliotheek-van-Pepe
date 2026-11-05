@@ -12,7 +12,8 @@ from GitHub and stops if there is something to pull.
 
 All dialogs are available in German and English; the language is chosen at start.
 
-Run from anywhere:  python scripts/menu.py
+Lies in the root folder of the library. Run from anywhere:
+    python menu-with-tutorial-for-release-process.py
 Needs Python 3.8+ (standard library only) and git on the PATH.
 """
 
@@ -23,8 +24,8 @@ import subprocess
 import sys
 import textwrap
 
-SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
-REPO_DIR = os.path.dirname(SCRIPTS_DIR)
+# The menu lies in the root folder of the library; the tools are in scripts/.
+REPO_DIR = os.path.dirname(os.path.abspath(__file__))
 DIST_DIR = 'dist'
 MAIN_BRANCH = 'main'
 REMOTE = 'origin'

@@ -28,4 +28,5 @@
 # Tools
 !scripts/*.py
 !scripts/LICENSE
-!Menu for zangbundel-tools.bat
+!menu-with-tutorial-for-release-process.py
+!menu-for-release-process.bat
