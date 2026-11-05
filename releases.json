@@ -3,6 +3,14 @@
   "library": "pepe-deutsche-lieder",
   "releases": [
     {
+      "version": "2026.10.10",
+      "revision": "1518cbadde8b7197b3bfbfba8c4eb1327643265a",
+      "created": "2026-11-05T11:33:50Z",
+      "url": "https://github.com/pepe-hb9evt/Zangbundel-bibliotheek-van-Pepe/releases/download/v2026.10.10/pepe-deutsche-lieder-2026.10.10.zbl",
+      "size": 13315,
+      "sha256": "85a2b8e42de12b69de8114afa2bf4ce5ade56b228d32229507909fa3d0978cd0"
+    },
+    {
       "version": "2026.10.9",
       "revision": "a93b6917de45bcebe8a17d030411dd566cf5d920",
       "created": "2026-11-05T04:28:10Z",
